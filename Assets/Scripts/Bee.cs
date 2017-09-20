@@ -19,8 +19,15 @@ public class Bee : MonoBehaviour {
     }
 
     private void CheckFlower(Collider2D collision) {
-        if (collision.CompareTag("Flower") && movementController.velocity.magnitude < 10) {
-            movementController.Land(collision.gameObject);
+        if (collision.CompareTag("Flower")) {
+            Flower flower = collision.gameObject.GetComponent<Flower>();
+
+            if (flower.stage.Equals(Flower.Stage.Flower) && movementController.velocity.magnitude < 10) {
+                movementController.Land(collision.gameObject);
+            }
+            else if (flower.stage.Equals(Flower.Stage.SeedHead) && movementController.velocity.magnitude > 20) {
+                flower.DisperseSeeds();
+            }
         }
     }
 

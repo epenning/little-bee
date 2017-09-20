@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class Flower : MonoBehaviour {
 
-    public enum Stage { Sprout, Flower, Pollinated, SeedHead };
+    static readonly string ANIMATION_POLLINATE_TRIGGER = "pollinate";
+    static readonly string ANIMATION_SEED_TRIGGER = "seed";
+    static readonly string ANIMATION_DISPERSE_TRIGGER = "disperse";
+
+    public enum Stage { Sprout, Flower, Pollinated, SeedHead, Dead };
     public static readonly float sproutTime = 10;
     public static readonly float flowerTime = 1000;
-    public static readonly float pollinatedTime = 30;
+    public static readonly float pollinatedTime = 10;
     public static readonly float seedHeadTime = 1000;
+
+    private Animator animator;
 
     public Stage stage;
     public float stageTimer;
 
-    private void Start() {
+    private void Start() { 
+        animator = GetComponent<Animator>();
+
         SetStage(stage);
     }
 
@@ -25,7 +33,7 @@ public class Flower : MonoBehaviour {
                 Bloom();
             }
             if (stage == Stage.Pollinated) {
-                SetStage(Stage.SeedHead);
+                MakeSeeds();
             }
             else {
                 Die();
@@ -52,6 +60,10 @@ public class Flower : MonoBehaviour {
         }
     }
 
+    public void Animate(string parameter) {
+        animator.SetTrigger(parameter);
+    }
+
     public void Bloom() {
         SetStage(Stage.Flower);
 
@@ -62,23 +74,22 @@ public class Flower : MonoBehaviour {
         if (stage == Stage.Flower) {
             SetStage(Stage.Pollinated);
 
-            // update sprite
+            Animate(ANIMATION_POLLINATE_TRIGGER);
         }
-    }
-
-    public void LosePollen() {
-        // update sprite
     }
 
     public void MakeSeeds() {
         SetStage(Stage.SeedHead);
 
-        // update sprite
-        // spawn seeds (attached to plant)
+        Animate(ANIMATION_SEED_TRIGGER);
     }
 
     public void DisperseSeeds() {
+        Animate(ANIMATION_DISPERSE_TRIGGER);
+
         // spread seeds
+
+        SetStage(Stage.Dead);
     }
 
     public void Die() {
