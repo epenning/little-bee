@@ -4,25 +4,41 @@ using UnityEngine;
 
 public class Flower : MonoBehaviour {
 
+    public GameObject sproutPrefab;
+    public string sproutPrefabPath = "Prefabs/Sprout";
+    public Transform sproutParent;
+
+    static readonly string ANIMATION_BLOOM_TRIGGER = "bloom";
     static readonly string ANIMATION_POLLINATE_TRIGGER = "pollinate";
     static readonly string ANIMATION_SEED_TRIGGER = "seed";
     static readonly string ANIMATION_DISPERSE_TRIGGER = "disperse";
 
     public enum Stage { Sprout, Flower, Pollinated, SeedHead, Dead };
-    public static readonly float sproutTime = 10;
+    public static readonly float sproutTime = 60;
     public static readonly float flowerTime = 1000;
     public static readonly float pollinatedTime = 10;
     public static readonly float seedHeadTime = 1000;
+    public static readonly int numberOfNewSprouts = 4;
+    public static readonly float newSproutRadius = 60;
 
     private Animator animator;
 
     public Stage stage;
     public float stageTimer;
 
-    private void Start() { 
+    private void Start() {
+        sproutPrefab = Resources.Load(sproutPrefabPath) as GameObject;
         animator = GetComponent<Animator>();
+        if (!sproutParent) {
+            sproutParent = GameObject.FindGameObjectWithTag("Flower Parent").transform;
+        }
 
-        SetStage(stage);
+        if (stage.Equals(Stage.Flower)) {
+            Bloom();
+        }
+        else {
+            SetStage(stage);
+        }
     }
 
     private void FixedUpdate() {
@@ -32,7 +48,7 @@ public class Flower : MonoBehaviour {
             if (stage == Stage.Sprout) {
                 Bloom();
             }
-            if (stage == Stage.Pollinated) {
+            else if (stage == Stage.Pollinated) {
                 MakeSeeds();
             }
             else {
@@ -67,7 +83,7 @@ public class Flower : MonoBehaviour {
     public void Bloom() {
         SetStage(Stage.Flower);
 
-        // update sprite
+        Animate(ANIMATION_BLOOM_TRIGGER);
     }
 
     public void Pollinate() {
@@ -86,10 +102,27 @@ public class Flower : MonoBehaviour {
 
     public void DisperseSeeds() {
         Animate(ANIMATION_DISPERSE_TRIGGER);
-
-        // spread seeds
+        
+        for (int i=0; i<numberOfNewSprouts; i++) {
+            SpawnSeed();
+        }
 
         SetStage(Stage.Dead);
+    }
+
+    public void SpawnSeed() {
+        float angle = Random.Range(0, 360);
+        float distance = Random.Range(0, newSproutRadius);
+
+        float relativeX = distance * Mathf.Cos(angle);
+        float relativeY = distance * Mathf.Sin(angle);
+
+        float rotationAngle = Random.Range(0, 360);
+
+        Vector3 position = new Vector3(transform.position.x + relativeX, transform.position.y + relativeY, transform.position.z);
+        Quaternion rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+
+        Instantiate(sproutPrefab, position, rotation, sproutParent);
     }
 
     public void Die() {

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Flower
+  - Flower Parent
   layers:
   - Default
   - TransparentFX
