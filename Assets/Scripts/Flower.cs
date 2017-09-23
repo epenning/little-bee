@@ -19,7 +19,7 @@ public class Flower : MonoBehaviour {
     public enum Stage { Sprout, Flower, Pollinated, SeedHead, Dead };
     public static readonly float sproutTime = 10;
     public static readonly float flowerTime = 1000;
-    public static readonly float pollinatedTime = 10;
+    public static readonly float pollinatedTime = 60;
     public static readonly float seedHeadTime = 1000;
     public static readonly int numberOfNewSprouts = 4;
     public static readonly float newSproutRadius = 60;
