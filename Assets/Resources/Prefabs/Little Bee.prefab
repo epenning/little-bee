@@ -526,6 +526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0709f00abd76e274093b4fb834dd03fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxXAndY: {x: 200, y: 200}
+  minXAndY: {x: -200, y: -200}
   maxSpeed: 50
   acceleration: 100
   deceleration: 120

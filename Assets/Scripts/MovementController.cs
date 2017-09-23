@@ -2,6 +2,9 @@
 
 public class MovementController : MonoBehaviour {
 
+    public Vector2 maxXAndY;
+    public Vector2 minXAndY;
+
     public float maxSpeed = 5f;
     public float acceleration = 2f;
     public float deceleration = 5f;
@@ -31,6 +34,8 @@ public class MovementController : MonoBehaviour {
         else {
             MoveByInput();
         }
+
+        PreventOutOfBounds();
     }
 
     private void MoveToTarget() {
@@ -91,5 +96,17 @@ public class MovementController : MonoBehaviour {
         }
 
         return velocity;
+    }
+
+    public void PreventOutOfBounds() {
+        Vector3 position = transform.position;
+        float x = transform.position.x;
+        float y = transform.position.y;
+        float z = transform.position.z;
+
+        position.x = Mathf.Clamp(position.x, minXAndY.x, maxXAndY.x);
+        position.y = Mathf.Clamp(position.y, minXAndY.y, maxXAndY.y);
+
+        transform.position = position;
     }
 }
