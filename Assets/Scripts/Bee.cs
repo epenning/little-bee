@@ -20,7 +20,7 @@ public class Bee : MonoBehaviour {
 
     private void CheckFlower(Collider2D collision) {
         if (collision.CompareTag("Flower")) {
-            Flower flower = collision.gameObject.GetComponent<Flower>();
+            Flower flower = collision.GetComponentInParent<Flower>();
 
             if (flower.stage.Equals(Flower.Stage.Flower) && movementController.velocity.magnitude < 10) {
                 movementController.Land(collision.gameObject);
@@ -38,7 +38,7 @@ public class Bee : MonoBehaviour {
     }
 
     private void Pollinate(GameObject flowerObject) {
-        Flower flower = flowerObject.GetComponent<Flower>();
+        Flower flower = flowerObject.GetComponentInParent<Flower>();
         flower.Pollinate();
     }
 }

@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 58321932968122126}
   - component: {fileID: 114654184800083728}
   - component: {fileID: 50478618996945640}
+  - component: {fileID: 114994900935865698}
   m_Layer: 0
   m_Name: Little Bee
   m_TagString: Player
@@ -51,7 +52,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1296416704642184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
@@ -126,6 +127,17 @@ MonoBehaviour:
   input: {x: 0, y: 0}
   target: {fileID: 0}
   landingSmoothing: 2
+--- !u!114 &114994900935865698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1296416704642184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c02eab2a67503c408c6c75e93cd4475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212954686817593518
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -157,7 +169,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 646d8e1ad3c9cbf48a1c7245bc9fd791, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

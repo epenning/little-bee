@@ -13,8 +13,11 @@ public class Flower : MonoBehaviour {
     static readonly string ANIMATION_SEED_TRIGGER = "seed";
     static readonly string ANIMATION_DISPERSE_TRIGGER = "disperse";
 
+    static readonly string PETALS_GAMEOBJECT = "Petals";
+    static readonly string SEEDHEAD_GAMEOBJECT = "flower1_seed_head";
+
     public enum Stage { Sprout, Flower, Pollinated, SeedHead, Dead };
-    public static readonly float sproutTime = 60;
+    public static readonly float sproutTime = 10;
     public static readonly float flowerTime = 1000;
     public static readonly float pollinatedTime = 10;
     public static readonly float seedHeadTime = 1000;
@@ -82,6 +85,18 @@ public class Flower : MonoBehaviour {
 
     public void Bloom() {
         SetStage(Stage.Flower);
+
+        // rotate flower upright, except petals and seedhead
+        Quaternion rotation = transform.localRotation;
+
+        foreach (Transform child in transform) {
+            if (child.name.Equals(PETALS_GAMEOBJECT) ||
+                child.name.Equals(SEEDHEAD_GAMEOBJECT)) {
+                child.localRotation = rotation;
+            }
+        }
+
+        transform.localRotation = Quaternion.identity;
 
         Animate(ANIMATION_BLOOM_TRIGGER);
     }
