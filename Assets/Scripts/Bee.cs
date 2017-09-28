@@ -18,6 +18,8 @@ public class Bee : MonoBehaviour {
 
     private void Update() {
         wingAnimator.SetFloat(ANIMATION_SPEED_FLOAT, (ANIMATION_SPEED_MULTIPLIER * movementController.velocity.magnitude) + 1);
+
+        FlipXIfNecessary();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -52,5 +54,18 @@ public class Bee : MonoBehaviour {
     private void Pollinate(GameObject flowerObject) {
         Flower flower = flowerObject.GetComponentInParent<Flower>();
         flower.Pollinate();
+    }
+
+    private void FlipXIfNecessary() {
+        float xSpeed = movementController.velocity.x;
+        Vector3 scale = transform.localScale;
+
+        if (xSpeed > 0) {
+            scale.x = Mathf.Abs(transform.localScale.x);
+        } else if (xSpeed < 0) {
+            scale.x = -Mathf.Abs(transform.localScale.x);
+        }
+
+        transform.localScale = scale;
     }
 }
