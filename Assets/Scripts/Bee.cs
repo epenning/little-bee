@@ -7,6 +7,7 @@ public class Bee : MonoBehaviour {
     MovementController movementController;
     public Animator wingAnimator;
     public Animator legAnimator;
+    public ParticleSystem trail;
 
     static readonly string ANIMATION_LAND_TRIGGER = "land";
     static readonly string ANIMATION_SPEED_FLOAT = "speed";
@@ -20,6 +21,8 @@ public class Bee : MonoBehaviour {
         wingAnimator.SetFloat(ANIMATION_SPEED_FLOAT, (ANIMATION_SPEED_MULTIPLIER * movementController.velocity.magnitude) + 1);
 
         FlipXIfNecessary();
+
+        UpdateParticlesRotation();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -67,5 +70,16 @@ public class Bee : MonoBehaviour {
         }
 
         transform.localScale = scale;
+    }
+
+    private void UpdateParticlesRotation() {
+        var main = trail.main;
+        float angle = Vector2.Angle(Vector2.right, movementController.velocity);
+        Vector3 cross = Vector3.Cross(Vector2.right, movementController.velocity);
+
+        if (cross.z > 0)
+            angle = 360 - angle;
+
+        main.startRotationZ = Mathf.Deg2Rad * angle;
     }
 }
