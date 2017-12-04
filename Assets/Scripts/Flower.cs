@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Flower : MonoBehaviour {
 
+    public GameManager gameManager;
     public GameObject sproutPrefab;
     public string sproutPrefabPath = "Prefabs/Sprout";
     public Transform sproutParent;
@@ -33,6 +34,8 @@ public class Flower : MonoBehaviour {
     List<Vector3> seedPositions = new List<Vector3>();
 
     private void Start() {
+        gameManager = FindObjectOfType<GameManager>();
+
         sproutPrefab = Resources.Load(sproutPrefabPath) as GameObject;
         animator = GetComponent<Animator>();
         if (!sproutParent) {
@@ -166,7 +169,6 @@ public class Flower : MonoBehaviour {
     
     public bool IsValidSpawnPosition(Vector3 position) {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll((Vector2)position, flowerRadius);
-        Debug.Log(hitColliders);
 
         foreach (Collider2D hitCollider in hitColliders) {
             if (hitCollider.CompareTag("Flower")) {
@@ -178,6 +180,13 @@ public class Flower : MonoBehaviour {
             if (Vector3.Distance(position, seedPosition) < flowerRadius) {
                 return false;
             }
+        }
+
+        if (position.x < gameManager.minXAndY.x || position.x > gameManager.maxXAndY.x) {
+            return false;
+        }
+        if (position.y < gameManager.minXAndY.y || position.y > gameManager.maxXAndY.y) {
+            return false;
         }
 
         return true;

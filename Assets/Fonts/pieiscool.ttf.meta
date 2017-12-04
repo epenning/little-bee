@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 94dc8d31231a48243b2377d0fe7e2815
+timeCreated: 1512364163
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: pieiscool
+  fontNames:
+  - pieiscool
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

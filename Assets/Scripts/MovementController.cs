@@ -4,9 +4,6 @@ public class MovementController : MonoBehaviour {
 
     public GameManager gameManager;
 
-    public Vector2 maxXAndY;
-    public Vector2 minXAndY;
-
     public float maxSpeed = 5f;
     public float acceleration = 2f;
     public float deceleration = 5f;
@@ -106,12 +103,9 @@ public class MovementController : MonoBehaviour {
 
     public void PreventOutOfBounds() {
         Vector3 position = transform.position;
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
 
-        position.x = Mathf.Clamp(position.x, minXAndY.x, maxXAndY.x);
-        position.y = Mathf.Clamp(position.y, minXAndY.y, maxXAndY.y);
+        position.x = Mathf.Clamp(position.x, gameManager.minXAndY.x, gameManager.maxXAndY.x);
+        position.y = Mathf.Clamp(position.y, gameManager.minXAndY.y, gameManager.maxXAndY.y);
 
         transform.position = position;
     }
