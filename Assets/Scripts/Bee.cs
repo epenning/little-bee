@@ -8,6 +8,7 @@ public class Bee : MonoBehaviour {
     public Animator wingAnimator;
     public Animator legAnimator;
     public ParticleSystem trail;
+    public AudioSource buzzAudio;
 
     static readonly string ANIMATION_LAND_TRIGGER = "land";
     static readonly string ANIMATION_SPEED_FLOAT = "speed";
@@ -15,6 +16,7 @@ public class Bee : MonoBehaviour {
 
     private void Start() {
         movementController = GetComponent<MovementController>();
+        buzzAudio = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -23,6 +25,8 @@ public class Bee : MonoBehaviour {
         FlipXIfNecessary();
 
         UpdateParticlesRotation();
+
+        buzzAudio.volume = movementController.velocity.magnitude / movementController.maxSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

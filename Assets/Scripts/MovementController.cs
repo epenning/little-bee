@@ -2,6 +2,8 @@
 
 public class MovementController : MonoBehaviour {
 
+    public GameManager gameManager;
+
     public Vector2 maxXAndY;
     public Vector2 minXAndY;
 
@@ -15,6 +17,10 @@ public class MovementController : MonoBehaviour {
 
     public Transform target = null;
     public float landingSmoothing = 1;
+
+    private void Start() {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
     private void FixedUpdate() {
         input.x = Input.GetAxis("Horizontal");
